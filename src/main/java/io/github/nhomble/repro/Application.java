@@ -4,6 +4,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.cloud.function.context.FunctionalSpringApplication;
 import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.annotation.AnnotationConfigUtils;
 import org.springframework.context.support.GenericApplicationContext;
 
 @SpringBootConfiguration
@@ -11,6 +12,8 @@ public class Application implements ApplicationContextInitializer<GenericApplica
 
     @Override
     public void initialize(GenericApplicationContext genericApplicationContext) {
+        // workaround
+        // AnnotationConfigUtils.registerAnnotationConfigProcessors(genericApplicationContext.getDefaultListableBeanFactory());
         genericApplicationContext.registerBeanDefinition("myDependency",
                 BeanDefinitionBuilder.genericBeanDefinition(Dependency.class, Dependency::new).getBeanDefinition());
         genericApplicationContext.registerBeanDefinition("myBeanWithDependency",
